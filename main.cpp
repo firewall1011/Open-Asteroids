@@ -8,11 +8,18 @@
 #include <vector>
 #include "Shader.h"
 #include "tvector.h"
+#include <chrono>
+#include <thread>
+
+using namespace std::chrono_literals;
+using namespace std::chrono;
+
+#define FPS 144
+#define MS_FTIME 1000ms/FPS
 
 float rotation = 0.0f;
 
-int main(void) {
-
+GLFWwindow* create_window(int width, int height, const char* name) {
     // inicicializando o sistema de\ janelas
     glfwInit();
 
@@ -20,10 +27,22 @@ int main(void) {
     glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE);
 
     // criando uma janela
-    GLFWwindow* window = glfwCreateWindow(600, 600, "Minha Janela", NULL, NULL);
+    GLFWwindow* window = glfwCreateWindow(width, height, name, NULL, NULL);
 
     // tornando a janela como principal 
     glfwMakeContextCurrent(window);
+
+    return window;
+}
+
+void close_window(GLFWwindow* window) {
+    glfwDestroyWindow(window);
+    glfwTerminate();
+}
+
+int main(void) {
+
+    GLFWwindow* window = create_window(600, 600, "Hoje");
 
     // inicializando Glew (para lidar com funcoes OpenGL)
     GLint GlewInitResult = glewInit();
@@ -47,8 +66,6 @@ int main(void) {
     GLint loc_transform = glGetUniformLocation(shader.GetID(), "transformation_matrix");
     GLint loc_color = glGetUniformLocation(shader.GetID(), "color");
 
-    std::cout << loc_position << loc_transform << loc_color;
-
     glEnableVertexAttribArray(loc_position);
     glVertexAttribPointer(loc_position, 2, GL_FLOAT, GL_FALSE, sizeof(vec2), (void*)0); // https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glVertexAttribPointer.xhtml
 
@@ -57,6 +74,7 @@ int main(void) {
 
     while (!glfwWindowShouldClose(window))
     {
+        auto start = steady_clock::now();
         glfwPollEvents();
 
         glPolygonMode(GL_POLYGON_MODE, GL_LINE);
@@ -84,6 +102,8 @@ int main(void) {
 
         glUniform4f(loc_color, 0, 1, 0, 1);
         glDrawArrays(GL_TRIANGLES, 0, 3);
+        
+        std::this_thread::sleep_for(start + MS_FTIME - steady_clock::now());
 
         glfwSwapBuffers(window);
 
@@ -96,8 +116,7 @@ int main(void) {
 
     }
 
-    glfwDestroyWindow(window);
-    glfwTerminate();
+    close_window(window);
 
     return EXIT_SUCCESS;
 }
