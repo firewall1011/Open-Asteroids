@@ -31,11 +31,13 @@ int main(void) {
 
     TLibrary::Shader shader("color.shader");
 
+    
     vec2 triangle[3] = { 
         { -0.50f, -0.50f },
         { +0.50f, -0.50f },
-	    { +1.00f, -1.00f },
+	 { +1.00f, -1.00f },
     };
+
 
     GLuint buffer;
     glGenBuffers(1, &buffer);
