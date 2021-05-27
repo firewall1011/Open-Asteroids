@@ -10,9 +10,9 @@ Asteroid::Asteroid(int num_vertices, float radius, float noise, vec2 center) : O
     center = center;
 }
 
-void Asteroid::Draw() const
+void Asteroid::Draw(int first) const
 {
-    glDrawArrays(GL_TRIANGLE_FAN, 0, length);
+    glDrawArrays(GL_TRIANGLE_FAN, first, length);
 }
 
 bool Asteroid::Collision(vec2 point) const 

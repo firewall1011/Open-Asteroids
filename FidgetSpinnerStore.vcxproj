@@ -157,6 +157,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Asteroid.h" />
+    <ClInclude Include="src\BufferData.h" />
     <ClInclude Include="src\Object.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

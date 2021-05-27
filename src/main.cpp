@@ -5,13 +5,14 @@
 #include <stdio.h>
 #include <cmath>
 #include <iostream>
+#include <chrono>
 #include <vector>
+#include <thread>
 #include "Shader.h"
 #include "tvector.h"
-#include <chrono>
-#include <thread>
 #include "mat4.h"
 #include "Asteroid.h"
+#include "BufferData.h"
 
 using namespace std::chrono_literals;
 using namespace std::chrono;
@@ -60,56 +61,58 @@ int main(void) {
     };*/
 
     //vec2 centro = (triangle[0] + triangle[1] + triangle[2])/3;
-    Asteroid asteroid(16, .1f, .05f, {0.0f, 0.0f});
-
-    GLuint buffer;
-    glGenBuffers(1, &buffer);
-    glBindBuffer(GL_ARRAY_BUFFER, buffer);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(vec2) * asteroid.length, asteroid.vertices, GL_STATIC_DRAW);
-
-    // Associando variáveis do programa GLSL (Vertex Shaders) com nossos dados
-    GLint loc_position = glGetAttribLocation(shader.GetID(), "position");
-    GLint loc_transform = glGetUniformLocation(shader.GetID(), "transformation_matrix");
-    GLint loc_color = glGetUniformLocation(shader.GetID(), "color");
-
-    glEnableVertexAttribArray(loc_position);
-    glVertexAttribPointer(loc_position, 2, GL_FLOAT, GL_FALSE, sizeof(vec2), (void*)0); // https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glVertexAttribPointer.xhtml
-
-    // Exibindo nossa janela
-    glfwShowWindow(window);
-
-    for (int i = 0; i < asteroid.length; i++)
-        std::cout << asteroid.vertices[i];
-
-    while (!glfwWindowShouldClose(window))
     {
-        auto start = steady_clock::now();
-        glfwPollEvents();
+        BufferData bufferData;
+        bufferData.data.push_back(new Asteroid(10, .05f, .02f, { 0.5f, 0.1f }));
+        bufferData.data.push_back(new Asteroid(32, .12f, .02f, { -0.5f, -0.5f }));
+        bufferData.data.push_back(new Asteroid(16, .13f, .03f, { -0.8f, 0.2f }));
+        bufferData.data.push_back(new Asteroid(64, .2f, .05f, { -0.1f, -0.3f }));
+        bufferData.data.push_back(new Asteroid(20, .1f, .05f, { 0.75f, 0.9f }));
 
-        glClear(GL_COLOR_BUFFER_BIT);
-        glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+        bufferData.SendToGPU();
+        /*GLuint buffer;
+        glGenBuffers(1, &buffer);
+        glBindBuffer(GL_ARRAY_BUFFER, buffer);
+        glBufferData(GL_ARRAY_BUFFER, sizeof(vec2) * asteroid.length, asteroid.vertices, GL_STATIC_DRAW);*/
 
-        // Transforma e desenha cilindro
-        shader.Bind();
-        glUniformMatrix4fv(loc_transform, 1, GL_TRUE, asteroid.Transform().m);
+        // Associando variáveis do programa GLSL (Vertex Shaders) com nossos dados
+        GLint loc_position = glGetAttribLocation(shader.GetID(), "position");
+        GLint loc_transform = glGetUniformLocation(shader.GetID(), "transformation_matrix");
+        GLint loc_color = glGetUniformLocation(shader.GetID(), "color");
 
-        glUniform4f(loc_color, 1, 0, 0, 1);
-        asteroid.Draw();
-        
-        std::this_thread::sleep_for(start + MS_FTIME - steady_clock::now());
+        glEnableVertexAttribArray(loc_position);
+        glVertexAttribPointer(loc_position, 2, GL_FLOAT, GL_FALSE, sizeof(vec2), (void*)0); // https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glVertexAttribPointer.xhtml
 
-        glfwSwapBuffers(window);
+        // Exibindo nossa janela
+        glfwShowWindow(window);
+
+        while (!glfwWindowShouldClose(window))
+        {
+            auto start = steady_clock::now();
+            glfwPollEvents();
+
+            glClear(GL_COLOR_BUFFER_BIT);
+            glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+
+            // Transforma e desenha cilindro
+            glUniform4f(loc_color, 1, 0, 0, 1);
+            bufferData.Draw(shader, loc_transform);
+
+            std::this_thread::sleep_for(start + MS_FTIME - steady_clock::now());
+
+            glfwSwapBuffers(window);
 
 #ifdef DEBUG
-        while (int error = glGetError() != GL_NO_ERROR)
-        {
-            std::cout << "GlErrorFlag: " << error << std::endl;
-        }
+            while (int error = glGetError() != GL_NO_ERROR)
+            {
+                std::cout << "GlErrorFlag: " << error << std::endl;
+            }
 #endif // DEBUG
 
-    }
+        }
 
-    close_window(window);
+        close_window(window);
+    }
 
     return EXIT_SUCCESS;
 }

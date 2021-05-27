@@ -1,11 +1,11 @@
+#pragma once
 #include "mat4.h"
 #include "tvector.h"
 #include "Shader.h"
 
 using namespace TLibrary;
 
-class Object
-{
+class Object {
 public:
     vec2 center;
     vec2* vertices;
@@ -16,8 +16,8 @@ public:
     vec2 scale; 
 
     Object() : center(vec2()), vertices(nullptr), length(0), scale(1,1), rotation(0){}
-
-    virtual void Draw() const = 0;
+    ~Object();
+    virtual void Draw(int first) const = 0;
     virtual bool Collision(vec2 point) const = 0;
     virtual void Update(float delta_time) = 0;
 
