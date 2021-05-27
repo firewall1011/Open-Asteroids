@@ -10,9 +10,12 @@
 #include "tvector.h"
 #include <chrono>
 #include <thread>
+#include "mat4.h"
+#include "Asteroid.h"
 
 using namespace std::chrono_literals;
 using namespace std::chrono;
+using namespace TLibrary;
 
 #define FPS 144
 #define MS_FTIME 1000ms/FPS
@@ -42,7 +45,7 @@ void close_window(GLFWwindow* window) {
 
 int main(void) {
 
-    GLFWwindow* window = create_window(600, 600, "Hoje");
+    GLFWwindow* window = create_window(720, 720, "Asteroids");
 
     // inicializando Glew (para lidar com funcoes OpenGL)
     GLint GlewInitResult = glewInit();
@@ -50,16 +53,18 @@ int main(void) {
 
     TLibrary::Shader shader("color.shader");
 
-    vec2 triangle[3] = { 
-        { -0.50f, -0.50f },
-        { +0.50f, -0.50f },
-	    { +1.00f, -1.00f },
+    vec2 triangle[3] = {
+        {-0.2f, -0.2f },
+        {0.2f, -0.2f},
+        {0.0f, 0.5f}
     };
+
+    vec2 centro = (triangle[0] + triangle[1] + triangle[2])/3;
 
     GLuint buffer;
     glGenBuffers(1, &buffer);
     glBindBuffer(GL_ARRAY_BUFFER, buffer);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(triangle), &triangle, GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(vec2) * 3, triangle, GL_STATIC_DRAW);
 
     // Associando variáveis do programa GLSL (Vertex Shaders) com nossos dados
     GLint loc_position = glGetAttribLocation(shader.GetID(), "position");
@@ -72,36 +77,33 @@ int main(void) {
     // Exibindo nossa janela
     glfwShowWindow(window);
 
+    Asteroid asteroid(16, 1.0f, 0.0f, {0.0f, 0.0f});
+    for (int i = 0; i < asteroid.length; i++)
+        std::cout << asteroid.vertices[i];
+
     while (!glfwWindowShouldClose(window))
     {
         auto start = steady_clock::now();
         glfwPollEvents();
 
-        glPolygonMode(GL_POLYGON_MODE, GL_LINE);
-
         glClear(GL_COLOR_BUFFER_BIT);
-        glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+        glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 
         //rotation = T_PI/4;
-        rotation += 0.001f;
+        rotation += 0.01f;
         float cosx = cosf(rotation);
         float sinx = sinf(rotation);
 
-        float transform_rotation[16] = {
-                1.0f, 0.0f,  0.0f, 0.0f,
-                0.0f, 1.0f, 0.0f , 0.0f,
-                0.0f, 0.0f,  1.0f, 0.0f,
-                0.0f, 0.0f,  0.0f, 1.0f
-        };
-
+        mat4 transform = mat4::Identity();
+        
+        transform = mat4::scale2D(0.1f) * transform;
+        
         // Transforma e desenha cilindro
         shader.Bind();
-        glUniformMatrix4fv(loc_transform, 1, GL_TRUE, transform_rotation);
+        glUniformMatrix4fv(loc_transform, 1, GL_TRUE, asteroid.Transform().m);
 
-
-
-        glUniform4f(loc_color, 0, 1, 0, 1);
-        glDrawArrays(GL_TRIANGLES, 0, 3);
+        glUniform4f(loc_color, 1, 0, 0, 1);
+        asteroid.Draw();
         
         std::this_thread::sleep_for(start + MS_FTIME - steady_clock::now());
 

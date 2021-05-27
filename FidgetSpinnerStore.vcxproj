@@ -148,10 +148,16 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp" />
+    <None Include="color.shader" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="color.shader" />
+    <ClCompile Include="src\Asteroid.cpp" />
+    <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\Object.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\Asteroid.h" />
+    <ClInclude Include="src\Object.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
