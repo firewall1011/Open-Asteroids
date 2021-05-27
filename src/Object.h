@@ -14,10 +14,8 @@ public:
     float rotation;
     vec2 position;
     vec2 scale; 
-    
-    unsigned int buffer;
 
-    Object() : center(vec2()), vertices(nullptr), length(0), scale(1,1), rotation(0), buffer(0){}
+    Object() : center(vec2()), vertices(nullptr), length(0), scale(1,1), rotation(0){}
 
     virtual void Draw() const = 0;
     virtual bool Collision(vec2 point) const = 0;

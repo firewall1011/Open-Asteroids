@@ -53,18 +53,19 @@ int main(void) {
 
     TLibrary::Shader shader("color.shader");
 
-    vec2 triangle[3] = {
+    /*vec2 triangle[3] = {
         {-0.2f, -0.2f },
         {0.2f, -0.2f},
         {0.0f, 0.5f}
-    };
+    };*/
 
-    vec2 centro = (triangle[0] + triangle[1] + triangle[2])/3;
+    //vec2 centro = (triangle[0] + triangle[1] + triangle[2])/3;
+    Asteroid asteroid(16, .1f, .05f, {0.0f, 0.0f});
 
     GLuint buffer;
     glGenBuffers(1, &buffer);
     glBindBuffer(GL_ARRAY_BUFFER, buffer);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(vec2) * 3, triangle, GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(vec2) * asteroid.length, asteroid.vertices, GL_STATIC_DRAW);
 
     // Associando variáveis do programa GLSL (Vertex Shaders) com nossos dados
     GLint loc_position = glGetAttribLocation(shader.GetID(), "position");
@@ -77,7 +78,6 @@ int main(void) {
     // Exibindo nossa janela
     glfwShowWindow(window);
 
-    Asteroid asteroid(16, 1.0f, 0.0f, {0.0f, 0.0f});
     for (int i = 0; i < asteroid.length; i++)
         std::cout << asteroid.vertices[i];
 
@@ -89,15 +89,6 @@ int main(void) {
         glClear(GL_COLOR_BUFFER_BIT);
         glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 
-        //rotation = T_PI/4;
-        rotation += 0.01f;
-        float cosx = cosf(rotation);
-        float sinx = sinf(rotation);
-
-        mat4 transform = mat4::Identity();
-        
-        transform = mat4::scale2D(0.1f) * transform;
-        
         // Transforma e desenha cilindro
         shader.Bind();
         glUniformMatrix4fv(loc_transform, 1, GL_TRUE, asteroid.Transform().m);
