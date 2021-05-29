@@ -13,6 +13,7 @@
 #include "mat4.h"
 #include "Asteroid.h"
 #include "BufferData.h"
+#include "Player.h"
 
 using namespace std::chrono_literals;
 using namespace std::chrono;
@@ -63,11 +64,13 @@ int main(void) {
     //vec2 centro = (triangle[0] + triangle[1] + triangle[2])/3;
     {
         BufferData bufferData;
-        bufferData.data.push_back(new Asteroid(10, .05f, .02f, { 0.5f, 0.1f }));
+        Player* player = new Player(window);
+        /*bufferData.data.push_back(new Asteroid(10, .05f, .02f, { 0.5f, 0.1f }));
         bufferData.data.push_back(new Asteroid(32, .12f, .02f, { -0.5f, -0.5f }));
         bufferData.data.push_back(new Asteroid(16, .13f, .03f, { -0.8f, 0.2f }));
         bufferData.data.push_back(new Asteroid(64, .2f, .05f, { -0.1f, -0.3f }));
-        bufferData.data.push_back(new Asteroid(20, .1f, .05f, { 0.75f, 0.9f }));
+        bufferData.data.push_back(new Asteroid(20, .1f, .05f, { 0.75f, 0.9f }));*/
+        bufferData.data.push_back(player);
 
         bufferData.SendToGPU();
         /*GLuint buffer;
@@ -96,12 +99,13 @@ int main(void) {
 
             // Transforma e desenha cilindro
             glUniform4f(loc_color, 1, 0, 0, 1);
+            player->Update(10);
             bufferData.Draw(shader, loc_transform);
 
             std::this_thread::sleep_for(start + MS_FTIME - steady_clock::now());
 
             glfwSwapBuffers(window);
-
+            
 #ifdef DEBUG
             while (int error = glGetError() != GL_NO_ERROR)
             {
