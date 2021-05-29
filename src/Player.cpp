@@ -30,5 +30,12 @@ void Player::Update(float delta_time) {
     xpos = 2 * (xpos/scr_width) - 1;
     ypos = 1 - 2 * (ypos/scr_height);
 
+    vec2 look_dir = (vec2((float) xpos, (float) ypos) - center).normalized();
+    vec2 x_dir = vec2(1.0f, 0.0f);
+    float cos = look_dir.x * x_dir.x + look_dir.y*x_dir.y;
+    float sin = look_dir.x * x_dir.y - look_dir.y * x_dir.x;
+    
+    std::cout << -(atan2(sin, cos)) * 180/T_PI  << std::endl;
+
     position = { (float)xpos, (float)ypos };
 }
