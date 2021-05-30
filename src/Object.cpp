@@ -33,9 +33,14 @@ void Object::Move(vec2 translation)
     position += translation;
 }
 
-void Object::Scale(vec2 value)
+void Object::ScaleRelative(vec2 value)
 {
     scale += value;
+}
+
+void Object::SetScale(vec2 value)
+{
+    scale = value;
 }
 
 mat4 Object::Transform()

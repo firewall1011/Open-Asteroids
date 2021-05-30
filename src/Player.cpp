@@ -10,13 +10,11 @@ Player::Player(GLFWwindow* w) : Object()
 {
     window = w;
     glfwGetWindowSize(window, &scr_width, &scr_height);
-    vertices = new vec2[3];
-
-    vertices[0] = { -0.02f, -0.02f };
-    vertices[1] = { 0.02f, -0.02f };
-    vertices[2] = { 0.0f, 0.05f };
-
+    
+    vertices = CriarTrianguloIsosceles(0.9f, center);
     length = 3;
+
+    SetScale(vec2(0.05f, 0.05f));
 }
 
 void Player::Draw(int first) const {
@@ -35,7 +33,7 @@ void Player::Update(float delta_time) {
     xpos = 2 * (xpos/scr_width) - 1;
     ypos = 1 - 2 * (ypos/scr_height);
 
-    vec2 look_point = vec2(xpos, ypos);
+    vec2 look_point = vec2((float)xpos, (float)ypos);
 
     LookAt(look_point);
 }

@@ -51,12 +51,10 @@ namespace TLibrary {
         float y = -2 * altura + 1;
         float x = cosf(asinf(y));
 
-        vertices[0] = vec2(0.0f, 1.0f);
-        vertices[1] = vec2(-x, y);
-        vertices[2] = vec2(x, y);
+        vertices[0] = vec2(0.0f, 1.0f) + centro;
+        vertices[1] = vec2(-x, y) + centro;
+        vertices[2] = vec2(x, y) + centro;
         
-        std::cout << vertices[1] << std::endl;
-        std::cout << vertices[2] << std::endl;
         return vertices;
     }
 

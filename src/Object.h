@@ -25,6 +25,7 @@ public:
     void Rotate(float degrees);
     void LookAt(vec2 point);
     void Move(vec2 translation);
-    void Scale(vec2 value);
+    void ScaleRelative(vec2 value);
+    void SetScale(vec2 value);
     mat4 Transform();
 };
