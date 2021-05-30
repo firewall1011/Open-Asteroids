@@ -8,9 +8,11 @@ public:
 	static const float speed;
 	static const float radius;
 	
-	Bullet(vec2 center, vec2 move_dir);
+	Bullet();
 	
 	virtual void Draw(int first) const;
 	virtual bool Collision(vec2 point, float radius) const;
 	virtual void Update(float delta_time);
+
+	void SetMoveDir(vec2 dir);
 };

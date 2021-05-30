@@ -29,7 +29,6 @@ void Object::LookAt(vec2 point) {
 
 void Object::Move(vec2 translation)
 {
-    center += translation;
     position += translation;
 }
 
@@ -45,7 +44,7 @@ void Object::SetScale(vec2 value)
 
 mat4 Object::Transform()
 {
-    return mat4::translate(center) * mat4::rotate2D(rotation) * mat4::translate(-center) * mat4::translate(position) * mat4::scale(scale);
+    return mat4::translate(center+position) * mat4::rotate2D(rotation) * mat4::translate(-(center + position)) * mat4::translate(position) * mat4::scale(scale);
     
 }
 

@@ -1,16 +1,16 @@
 #define GLFW_INCLUDE_NONE
 
-#include"player.h"
-#include"object.h"
 #include<GLFW/glfw3.h>
-#include"tvector.h"
 #include<gl/glew.h>
+
+#include"tvector.h"
+#include"Object.h"
+#include"Player.h"
 
 Player::Player(GLFWwindow* w) : Object()
 {
     window = w;
     glfwGetWindowSize(window, &scr_width, &scr_height);
-    
     vertices = CriarTrianguloIsosceles(0.9f, center);
     length = 3;
 

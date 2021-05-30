@@ -15,19 +15,22 @@ public:
 		int offset = 0;
 		for (Object*& obj : data)
 		{
-			glUniformMatrix4fv(matrix, 1, GL_TRUE, obj->Transform().m);
-			obj->Draw(offset);
+			if (obj->isActive) 
+			{
+				glUniformMatrix4fv(matrix, 1, GL_TRUE, obj->Transform().m);
+				obj->Draw(offset);
+			}
 			offset += obj->length;
 		}
 	}
 
 	void Update(float delta_time)
 	{
-		int offset = 0;
 		for (Object*& obj : data)
 		{
+			if (!obj->isActive)
+				continue;
 			obj->Update(delta_time);
-			offset += obj->length;
 		}
 	}
 

@@ -1,9 +1,10 @@
+#pragma once
 #define GLFW_INCLUDE_NONE
-
-#include"object.h"
 #include<GLFW/glfw3.h>
-#include"tvector.h"
 #include<gl/glew.h>
+
+#include"Object.h"
+#include"tvector.h"
 
 
 class Player : public Object {
@@ -17,5 +18,4 @@ public:
     virtual bool Collision(vec2 point, float radius) const;
 
     virtual void Update(float delta_time);
-
 };

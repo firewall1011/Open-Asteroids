@@ -151,6 +151,7 @@
     <None Include="color.shader" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\BulletFireSystem.cpp" />
     <ClCompile Include="src\Bullet.cpp" />
     <ClCompile Include="src\Asteroid.cpp" />
     <ClCompile Include="src\AsteroidsGenerator.cpp" />
@@ -159,6 +160,7 @@
     <ClCompile Include="src\Player.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\BulletFireSystem.h" />
     <ClInclude Include="src\Bullet.h" />
     <ClInclude Include="src\Asteroid.h" />
     <ClInclude Include="src\AsteroidsGenerator.h" />
