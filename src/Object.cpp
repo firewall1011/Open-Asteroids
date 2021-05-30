@@ -29,6 +29,7 @@ void Object::LookAt(vec2 point) {
 
 void Object::Move(vec2 translation)
 {
+    center += translation;
     position += translation;
 }
 

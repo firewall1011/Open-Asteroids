@@ -14,7 +14,7 @@ public:
 
     virtual void Draw(int first) const;
 
-    virtual bool Collision(vec2 point) const;
+    virtual bool Collision(vec2 point, float radius) const;
 
     virtual void Update(float delta_time);
 

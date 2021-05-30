@@ -23,7 +23,7 @@ void Player::Draw(int first) const {
     glDrawArrays(GL_LINE_LOOP, first, length);
 }
 
-bool Player::Collision(vec2 point) const {
+bool Player::Collision(vec2 point, float radius) const {
     return true;
 }
 
@@ -36,6 +36,6 @@ void Player::Update(float delta_time) {
     ypos = 1 - 2 * (ypos/scr_height);
 
     vec2 look_point = vec2(xpos, ypos);
- 
+
     LookAt(look_point);
 }

@@ -7,24 +7,26 @@ vec2* AsteroidVertices(int num_vertices, float radius, float distance, const vec
 Asteroid::Asteroid(int num_vertices, float radius, float noise, vec2 center, vec2 move_dir, float speed) : Object() {
     vertices = AsteroidVertices(num_vertices, radius, noise, center);
     length = num_vertices;
-    center = center;
+    this->center = center;
+    this->radius = radius;
     this->move_dir = move_dir;
     this->speed = speed;
 }
 
 void Asteroid::Draw(int first) const
 {
-    glDrawArrays(GL_TRIANGLE_FAN, first, length);
+    glDrawArrays(GL_LINE_LOOP, first, length);
 }
 
-bool Asteroid::Collision(vec2 point) const 
+bool Asteroid::Collision(vec2 point, float obj_radius) const
 {
-    return true;
+    return (point - center).magnitude() <= obj_radius + this->radius;
 }
 
 void Asteroid::Update(float delta_time)
 {
     Move((move_dir) * speed);
+    Rotate(0.005f);
 }
 
 vec2* AsteroidVertices(int num_vertices, float radius, float distance, const vec2& centro) {
