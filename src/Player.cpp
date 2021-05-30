@@ -12,10 +12,10 @@ Player::Player(GLFWwindow* w) : Object()
     glfwGetWindowSize(window, &scr_width, &scr_height);
     vertices = new vec2[3];
 
-    vertices[0] = { -0.2f, -0.2f };
-    vertices[1] = { 0.2f, -0.2f };
-    vertices[2] = { 0.0f, 0.5f };
-    
+    vertices[0] = { -0.02f, -0.02f };
+    vertices[1] = { 0.02f, -0.02f };
+    vertices[2] = { 0.0f, 0.05f };
+
     length = 3;
 }
 
@@ -36,6 +36,6 @@ void Player::Update(float delta_time) {
     ypos = 1 - 2 * (ypos/scr_height);
 
     vec2 look_point = vec2(xpos, ypos);
-
+ 
     LookAt(look_point);
 }

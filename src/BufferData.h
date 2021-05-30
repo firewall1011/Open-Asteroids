@@ -21,6 +21,16 @@ public:
 		}
 	}
 
+	void Update(float delta_time)
+	{
+		int offset = 0;
+		for (Object*& obj : data)
+		{
+			obj->Update(delta_time);
+			offset += obj->length;
+		}
+	}
+
 	void SendToGPU() {
 
 		int size = 0;

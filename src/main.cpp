@@ -65,11 +65,11 @@ int main(void) {
     {
         BufferData bufferData;
         Player* player = new Player(window);
-        /*bufferData.data.push_back(new Asteroid(10, .05f, .02f, { 0.5f, 0.1f }));
-        bufferData.data.push_back(new Asteroid(32, .12f, .02f, { -0.5f, -0.5f }));
-        bufferData.data.push_back(new Asteroid(16, .13f, .03f, { -0.8f, 0.2f }));
-        bufferData.data.push_back(new Asteroid(64, .2f, .05f, { -0.1f, -0.3f }));
-        bufferData.data.push_back(new Asteroid(20, .1f, .05f, { 0.75f, 0.9f }));*/
+        bufferData.data.push_back(new Asteroid(10, .05f, .02f, { 0.5f, 0.1f }, vec2(1,0), 0.001f));
+        bufferData.data.push_back(new Asteroid(32, .12f, .02f, { -0.5f, -0.5f }, vec2(1, 0), 0.001f));
+        bufferData.data.push_back(new Asteroid(16, .13f, .03f, { -0.8f, 0.2f }, vec2(1, 0), 0.001f));
+        bufferData.data.push_back(new Asteroid(64, .2f, .05f, { -0.1f, -0.3f }, vec2(1, 0), 0.001f));
+        bufferData.data.push_back(new Asteroid(20, .1f, .05f, { 0.75f, 0.9f }, vec2(1, 0), 0.001f));
         bufferData.data.push_back(player);
 
         bufferData.SendToGPU();
@@ -99,7 +99,9 @@ int main(void) {
 
             // Transforma e desenha cilindro
             glUniform4f(loc_color, 1, 0, 0, 1);
-            player->Update(10);
+            
+            bufferData.Update(10);
+
             bufferData.Draw(shader, loc_transform);
 
             std::this_thread::sleep_for(start + MS_FTIME - steady_clock::now());
