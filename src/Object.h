@@ -14,14 +14,16 @@ public:
     float rotation;
     vec2 position;
     vec2 scale; 
+    vec2 up;
 
-    Object() : center(vec2()), vertices(nullptr), length(0), scale(1,1), rotation(0){}
+    Object() : center(vec2()), vertices(nullptr), length(0), scale(1, 1), rotation(0), up({ 0,1 }) {}
     ~Object();
     virtual void Draw(int first) const = 0;
     virtual bool Collision(vec2 point) const = 0;
     virtual void Update(float delta_time) = 0;
 
     void Rotate(float degrees);
+    void LookAt(vec2 point);
     void Move(vec2 translation);
     void Scale(vec2 value);
     mat4 Transform();

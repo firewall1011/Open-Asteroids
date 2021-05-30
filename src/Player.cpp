@@ -10,12 +10,17 @@ Player::Player(GLFWwindow* w) : Object()
 {
     window = w;
     glfwGetWindowSize(window, &scr_width, &scr_height);
-    vertices = CriarCirculo(16,0.125f/2);
-    length = 16;
+    vertices = new vec2[3];
+
+    vertices[0] = { -0.2f, -0.2f };
+    vertices[1] = { 0.2f, -0.2f };
+    vertices[2] = { 0.0f, 0.5f };
+    
+    length = 3;
 }
 
 void Player::Draw(int first) const {
-    glDrawArrays(GL_TRIANGLE_FAN, first, 16);
+    glDrawArrays(GL_LINE_LOOP, first, length);
 }
 
 bool Player::Collision(vec2 point) const {
@@ -30,12 +35,7 @@ void Player::Update(float delta_time) {
     xpos = 2 * (xpos/scr_width) - 1;
     ypos = 1 - 2 * (ypos/scr_height);
 
-    vec2 look_dir = (vec2((float) xpos, (float) ypos) - center).normalized();
-    vec2 x_dir = vec2(1.0f, 0.0f);
-    float cos = look_dir.x * x_dir.x + look_dir.y*x_dir.y;
-    float sin = look_dir.x * x_dir.y - look_dir.y * x_dir.x;
-    
-    std::cout << -(atan2(sin, cos)) * 180/T_PI  << std::endl;
+    vec2 look_point = vec2(xpos, ypos);
 
-    position = { (float)xpos, (float)ypos };
+    LookAt(look_point);
 }
