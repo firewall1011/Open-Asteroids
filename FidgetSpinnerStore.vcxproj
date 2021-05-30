@@ -152,12 +152,14 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Asteroid.cpp" />
+    <ClCompile Include="src\AsteroidsGenerator.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\Object.cpp" />
     <ClCompile Include="src\Player.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Asteroid.h" />
+    <ClInclude Include="src\AsteroidsGenerator.h" />
     <ClInclude Include="src\BufferData.h" />
     <ClInclude Include="src\Object.h" />
     <ClInclude Include="src\Player.h" />

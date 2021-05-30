@@ -25,7 +25,6 @@ bool Asteroid::Collision(vec2 point) const
 void Asteroid::Update(float delta_time)
 {
     Move((move_dir) * speed);
-    std::cout << position << std::endl;
 }
 
 vec2* AsteroidVertices(int num_vertices, float radius, float distance, const vec2& centro) {

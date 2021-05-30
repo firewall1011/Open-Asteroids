@@ -14,6 +14,7 @@
 #include "Asteroid.h"
 #include "BufferData.h"
 #include "Player.h"
+#include "AsteroidsGenerator.h"
 
 using namespace std::chrono_literals;
 using namespace std::chrono;
@@ -64,12 +65,13 @@ int main(void) {
     //vec2 centro = (triangle[0] + triangle[1] + triangle[2])/3;
     {
         BufferData bufferData;
+
+        AsteroidsGenerator asteroidsGenerator = AsteroidsGenerator(&bufferData, 0.03f, 0.08f, 50, 100, 0.001f, 0.003f, 2.0f);
+        srand(time(NULL));
+        asteroidsGenerator.CreateAsteroids(10);
+       
         Player* player = new Player(window);
-        bufferData.data.push_back(new Asteroid(10, .05f, .02f, { 0.5f, 0.1f }, vec2(1,0), 0.001f));
-        bufferData.data.push_back(new Asteroid(32, .12f, .02f, { -0.5f, -0.5f }, vec2(1, 0), 0.001f));
-        bufferData.data.push_back(new Asteroid(16, .13f, .03f, { -0.8f, 0.2f }, vec2(1, 0), 0.001f));
-        bufferData.data.push_back(new Asteroid(64, .2f, .05f, { -0.1f, -0.3f }, vec2(1, 0), 0.001f));
-        bufferData.data.push_back(new Asteroid(20, .1f, .05f, { 0.75f, 0.9f }, vec2(1, 0), 0.001f));
+        
         bufferData.data.push_back(player);
 
         bufferData.SendToGPU();
