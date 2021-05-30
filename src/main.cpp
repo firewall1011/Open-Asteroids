@@ -56,13 +56,6 @@ int main(void) {
 
     TLibrary::Shader shader("color.shader");
 
-    /*vec2 triangle[3] = {
-        {-0.2f, -0.2f },
-        {0.2f, -0.2f},
-        {0.0f, 0.5f}
-    };*/
-
-    //vec2 centro = (triangle[0] + triangle[1] + triangle[2])/3;
     {
         BufferData bufferData;
 
