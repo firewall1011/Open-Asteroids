@@ -6,6 +6,7 @@
 #include"tvector.h"
 #include"Object.h"
 #include"Player.h"
+#include "BulletFireSystem.h"
 
 Player::Player(GLFWwindow* w) : Object()
 {
@@ -26,6 +27,13 @@ bool Player::Collision(vec2 point, float radius) const {
 }
 
 void Player::Update(float delta_time) {
+    CalculateLookPoint();
+
+    ProcessInput();
+}
+
+void Player::CalculateLookPoint() 
+{
     double xpos = 0, ypos = 0;
     glfwGetCursorPos(window, &xpos, &ypos);
   
@@ -36,4 +44,12 @@ void Player::Update(float delta_time) {
     vec2 look_point = vec2((float)xpos, (float)ypos);
 
     LookAt(look_point);
+}
+
+void Player::ProcessInput() 
+{
+    if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS || glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS)
+    {
+        BulletFireSystem::SpawnBullet(this);
+    }
 }

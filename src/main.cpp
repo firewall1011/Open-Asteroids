@@ -97,17 +97,10 @@ int main(void) {
             glClear(GL_COLOR_BUFFER_BIT);
             glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 
-            // Transforma e desenha cilindro
             glUniform4f(loc_color, 1, 0, 0, 1);
             
             bufferData.Update(10);
-
             bufferData.Draw(shader, loc_transform);
-
-            if (glfwGetKey(window, GLFW_KEY_SPACE)) 
-            {
-                BulletFireSystem::SpawnBullet(player);
-            }
 
             std::this_thread::sleep_for(start + MS_FTIME - steady_clock::now());
 

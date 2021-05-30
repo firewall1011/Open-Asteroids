@@ -5,7 +5,7 @@
 
 namespace BulletFireSystem
 {
-	#define MAX_BULLETS 25
+	#define MAX_BULLETS 50
 
 	void SpawnBullet(Player* player);
 

@@ -18,4 +18,7 @@ public:
     virtual bool Collision(vec2 point, float radius) const;
 
     virtual void Update(float delta_time);
+private:
+    void CalculateLookPoint();
+    void ProcessInput();
 };
