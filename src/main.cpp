@@ -67,18 +67,14 @@ int main(void) {
         BufferData bufferData;
 
         AsteroidsGenerator asteroidsGenerator = AsteroidsGenerator(&bufferData, 0.03f, 0.08f, 50, 100, 0.001f, 0.003f, 2.0f);
-        srand(time(NULL));
-        asteroidsGenerator.CreateAsteroids(10);
+        srand(1);
+        asteroidsGenerator.CreateAsteroids(10000);
        
         Player* player = new Player(window);
         
         bufferData.data.push_back(player);
 
         bufferData.SendToGPU();
-        /*GLuint buffer;
-        glGenBuffers(1, &buffer);
-        glBindBuffer(GL_ARRAY_BUFFER, buffer);
-        glBufferData(GL_ARRAY_BUFFER, sizeof(vec2) * asteroid.length, asteroid.vertices, GL_STATIC_DRAW);*/
 
         // Associando variáveis do programa GLSL (Vertex Shaders) com nossos dados
         GLint loc_position = glGetAttribLocation(shader.GetID(), "position");
