@@ -45,7 +45,8 @@ void Object::SetScale(vec2 value)
 
 mat4 Object::Transform()
 {
-    return mat4::scale(scale) * mat4::translate(center) * mat4::rotate2D(rotation) * mat4::translate(-center) * mat4::translate(position);
+    return mat4::translate(center) * mat4::rotate2D(rotation) * mat4::translate(-center) * mat4::translate(position) * mat4::scale(scale);
+    
 }
 
 Object::~Object() 

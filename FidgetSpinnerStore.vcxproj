@@ -151,6 +151,7 @@
     <None Include="color.shader" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Bullet.cpp" />
     <ClCompile Include="src\Asteroid.cpp" />
     <ClCompile Include="src\AsteroidsGenerator.cpp" />
     <ClCompile Include="src\main.cpp" />
@@ -158,11 +159,13 @@
     <ClCompile Include="src\Player.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Bullet.h" />
     <ClInclude Include="src\Asteroid.h" />
     <ClInclude Include="src\AsteroidsGenerator.h" />
     <ClInclude Include="src\BufferData.h" />
     <ClInclude Include="src\Object.h" />
     <ClInclude Include="src\Player.h" />
+    <ClInclude Include="TLibrary\src\Collisions.h" />
     <ClInclude Include="TLibrary\src\Random.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

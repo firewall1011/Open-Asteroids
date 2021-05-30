@@ -1,6 +1,7 @@
 #define GLFW_INCLUDE_NONE
 #include "Asteroid.h"
 #include <GL/glew.h> 
+#include <Collisions.h>
 
 vec2* AsteroidVertices(int num_vertices, float radius, float distance, const vec2& centro);
 
@@ -20,7 +21,7 @@ void Asteroid::Draw(int first) const
 
 bool Asteroid::Collision(vec2 point, float obj_radius) const
 {
-    return (point - center).magnitude() <= obj_radius + this->radius;
+    return Collisions::CircleWithCircle(center, point, radius, obj_radius);
 }
 
 void Asteroid::Update(float delta_time)

@@ -8,13 +8,16 @@
 #include <chrono>
 #include <vector>
 #include <thread>
+
 #include "Shader.h"
 #include "tvector.h"
 #include "mat4.h"
-#include "Asteroid.h"
 #include "BufferData.h"
-#include "Player.h"
 #include "AsteroidsGenerator.h"
+#include "Bullet.h"
+#include "Player.h"
+#include "Asteroid.h"
+#include "Random.h"
 
 using namespace std::chrono_literals;
 using namespace std::chrono;
@@ -64,7 +67,10 @@ int main(void) {
         asteroidsGenerator.CreateAsteroids(20);
        
         Player* player = new Player(window);
-        
+
+        for (int i = 0; i < 5; i++)
+            bufferData.data.push_back( new Bullet( player->center, vec2(Random::Value(), Random::Value())) );
+
         bufferData.data.push_back(player);
 
         bufferData.SendToGPU();

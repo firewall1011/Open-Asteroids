@@ -4,18 +4,18 @@
 namespace Random 
 {
 	// Returns a random float within [0.0..1.0] (range is inclusive) (Read Only).
-	float Value() {
+	inline float Value() {
 		return (rand() / (float)RAND_MAX);
 	}
 
 	// Returns a random float within[minInclusive..maxInclusive](range is inclusive).
-	float Range(float min, float max) 
+	inline float Range(float min, float max)
 	{
 		return Value() * (max-min) + min;
 	}
 	
 	//InitState	Initializes the random number generator state with a seed.
-	void InitState(unsigned int seed) 
+	inline void InitState(unsigned int seed)
 	{
 		srand(seed);
 	}
