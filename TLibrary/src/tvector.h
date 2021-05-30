@@ -43,6 +43,7 @@ namespace TLibrary {
     vec2* CriarCirculo(int num_vertices = 8, float raio = 1.0, const vec2& centro = { 0,0 }, float angulo_inicial = 0.0, float angulo_final = 2 * T_PI);
     vec2* CriarQuadrado(float largura, const vec2& centro);
     vec2* CriarRetangulo(float largura, float altura, const vec2& centro);
+    vec2* CriarTrianguloIsosceles(float altura, const vec2& centro);
 
     vec3* CriarCilindro(const int num_vertices = 16, const float raio = 1.0, const float height = 1.0f, const vec3& base = { 0 });
 

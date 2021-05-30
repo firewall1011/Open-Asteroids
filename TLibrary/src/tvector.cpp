@@ -32,7 +32,8 @@ namespace TLibrary {
         return vertices;
     }
 
-    vec2* CriarRetangulo(float largura, float altura, const vec2& centro) {
+    vec2* CriarRetangulo(float largura, float altura, const vec2& centro) 
+    {
         vec2* vertices = new vec2[4];
 
         vertices[0] = { centro.x - largura / 2, centro.y - altura / 2 }; // esquerda embaixo
@@ -40,6 +41,22 @@ namespace TLibrary {
         vertices[2] = { centro.x - largura / 2, centro.y + altura / 2 }; // esquerda cima
         vertices[3] = { centro.x + largura / 2, centro.y + altura / 2 }; // direita cima
 
+        return vertices;
+    }
+
+    vec2* CriarTrianguloIsosceles(float altura, const vec2& centro) 
+    {
+        vec2* vertices = new vec2[3];
+        
+        float y = -2 * altura + 1;
+        float x = cosf(asinf(y));
+
+        vertices[0] = vec2(0.0f, 1.0f);
+        vertices[1] = vec2(-x, y);
+        vertices[2] = vec2(x, y);
+        
+        std::cout << vertices[1] << std::endl;
+        std::cout << vertices[2] << std::endl;
         return vertices;
     }
 
