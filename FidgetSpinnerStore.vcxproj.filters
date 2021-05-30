@@ -50,5 +50,8 @@
     <ClInclude Include="src\AsteroidsGenerator.h">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
+    <ClInclude Include="TLibrary\src\Random.h">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

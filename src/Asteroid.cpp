@@ -33,7 +33,6 @@ vec2* AsteroidVertices(int num_vertices, float radius, float distance, const vec
     vec2* vertices = new vec2[num_vertices];
 
     float angle = 0.0f;
-    srand(time(NULL));
 
     float x, y;
     for (int i = 0; i < num_vertices; i++)
