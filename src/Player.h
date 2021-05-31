@@ -5,11 +5,14 @@
 
 #include"Object.h"
 #include"tvector.h"
+#include "Timer.h"
 
 
 class Player : public Object {
     GLFWwindow* window;
     int scr_width, scr_height;
+    bool canShoot = true;
+    Timer timer;
 public:
     Player(GLFWwindow* w);
 
@@ -21,4 +24,5 @@ public:
 private:
     void CalculateLookPoint();
     void ProcessInput();
+    void Shoot();
 };

@@ -158,6 +158,7 @@
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\Object.cpp" />
     <ClCompile Include="src\Player.cpp" />
+    <ClCompile Include="src\Timer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\BulletFireSystem.h" />
@@ -167,6 +168,7 @@
     <ClInclude Include="src\BufferData.h" />
     <ClInclude Include="src\Object.h" />
     <ClInclude Include="src\Player.h" />
+    <ClInclude Include="src\Timer.h" />
     <ClInclude Include="TLibrary\src\Collisions.h" />
     <ClInclude Include="TLibrary\src\Random.h" />
   </ItemGroup>

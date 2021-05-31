@@ -89,6 +89,7 @@ int main(void) {
         // Exibindo nossa janela
         glfwShowWindow(window);
 
+        float delta_time = (float)(MS_FTIME).count() * 1e-3;
         while (!glfwWindowShouldClose(window))
         {
             auto start = steady_clock::now();
@@ -99,12 +100,15 @@ int main(void) {
 
             glUniform4f(loc_color, 1, 0, 0, 1);
             
-            bufferData.Update(10);
+            bufferData.Update(delta_time);
             bufferData.Draw(shader, loc_transform);
 
-            std::this_thread::sleep_for(start + MS_FTIME - steady_clock::now());
-
             glfwSwapBuffers(window);
+
+            auto sleepTime = (start + MS_FTIME) - steady_clock::now();
+            std::this_thread::sleep_for(sleepTime);
+
+            //delta_time = (float)(sleepTime).count()*1e-9;
             
 #ifdef DEBUG
             while (int error = glGetError() != GL_NO_ERROR)

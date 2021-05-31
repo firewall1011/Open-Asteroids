@@ -8,7 +8,7 @@
 #include"Player.h"
 #include "BulletFireSystem.h"
 
-Player::Player(GLFWwindow* w) : Object()
+Player::Player(GLFWwindow* w) : Object(), timer(0.1f)
 {
     window = w;
     glfwGetWindowSize(window, &scr_width, &scr_height);
@@ -28,8 +28,9 @@ bool Player::Collision(vec2 point, float radius) const {
 
 void Player::Update(float delta_time) {
     CalculateLookPoint();
-
     ProcessInput();
+    if (timer.Tick(delta_time)) 
+        canShoot = true;
 }
 
 void Player::CalculateLookPoint() 
@@ -50,6 +51,15 @@ void Player::ProcessInput()
 {
     if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS || glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS)
     {
+        Shoot();
+    }
+}
+
+void Player::Shoot() 
+{
+    if (canShoot) {
         BulletFireSystem::SpawnBullet(this);
+        canShoot = false;
+        timer.Reset();
     }
 }
