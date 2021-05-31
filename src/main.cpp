@@ -30,6 +30,7 @@ using namespace TLibrary;
 
 #define FPS 144
 #define MS_FTIME 1000ms/FPS
+#define NANO_TO_SEC_F(t) (float)(t).count()*1e-9;
 
 float rotation = 0.0f;
 
@@ -108,7 +109,7 @@ int main(void) {
             auto sleepTime = (start + MS_FTIME) - steady_clock::now();
             std::this_thread::sleep_for(sleepTime);
 
-            //delta_time = (float)(sleepTime).count()*1e-9;
+            delta_time = NANO_TO_SEC_F(sleepTime);
             
 #ifdef DEBUG
             while (int error = glGetError() != GL_NO_ERROR)
