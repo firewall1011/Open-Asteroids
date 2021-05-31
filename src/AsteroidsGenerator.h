@@ -1,8 +1,11 @@
 #pragma once
+#include <stdlib.h>
+#include <vector>
+
 #include "BufferData.h"
 #include "Asteroid.h"
 #include "tvector.h"
-#include <stdlib.h>
+
 class AsteroidsGenerator
 {
 	float min_asteroid_radius;
@@ -13,6 +16,7 @@ class AsteroidsGenerator
 	float max_asteroid_speed;
 	float orbit_radius;
 	BufferData *buffer;
+
 public:
 	
 	AsteroidsGenerator(BufferData *buff,

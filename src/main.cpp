@@ -23,6 +23,7 @@
 #include "BufferData.h"
 #include "AsteroidsGenerator.h"
 #include "BulletFireSystem.h"
+#include "AsteroidPoolingSystem.h"
 
 using namespace std::chrono_literals;
 using namespace std::chrono;
@@ -87,6 +88,7 @@ int main(void) {
 
         // Exibindo nossa janela
         glfwShowWindow(window);
+        Timer timer(0.35f);
 
         float delta_time = (float)(MS_FTIME).count() * 1e-3;
         while (!glfwWindowShouldClose(window))
@@ -99,6 +101,12 @@ int main(void) {
 
             glUniform4f(loc_color, 1, 0, 0, 1);
             
+            if (timer.Tick(delta_time)) 
+            {
+                AsteroidPoolingSystem::SpawnAsteroid();
+                timer.Reset();
+            }
+
             bufferData.Update(delta_time);
             bufferData.Draw(shader, loc_transform);
 
