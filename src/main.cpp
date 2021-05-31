@@ -32,8 +32,6 @@ using namespace TLibrary;
 #define MS_FTIME 1000ms/FPS
 #define NANO_TO_SEC_F(t) (float)(t).count()*1e-9;
 
-float rotation = 0.0f;
-
 GLFWwindow* create_window(int width, int height, const char* name) {
     // inicicializando o sistema de\ janelas
     glfwInit();
