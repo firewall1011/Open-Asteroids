@@ -4,8 +4,7 @@
 
 namespace BulletFireSystem
 {
-	static std::vector<Bullet*> bullets;
-
+	std::vector<Bullet*> bullets;
 	void SpawnBullet(Player* player) 
 	{
 		Bullet* b = FindInactiveBullet();
@@ -19,7 +18,6 @@ namespace BulletFireSystem
 
 	void CreateBullets(BufferData& bufferData) 
 	{
-		bullets.reserve(MAX_BULLETS);
 		for (int i = 0; i < MAX_BULLETS; i++) 
 		{
 			bullets.push_back(new Bullet());

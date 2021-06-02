@@ -79,6 +79,10 @@ int main(void) {
         
         BulletFireSystem::CreateBullets(bufferData);
 
+        
+
+        //BulletFireSystem::
+
         bufferData.SendToGPU();
 
         // Associando variáveis do programa GLSL (Vertex Shaders) com nossos dados
@@ -93,8 +97,14 @@ int main(void) {
         glfwShowWindow(window);
         Timer timer(0.35f);
 
+        //Contador de pontos do jogador
+        int points = 0;
+
+        //variável de loop do jogo
+        bool game_is_running = true;
+
         float delta_time = (float)(MS_FTIME).count() * 1e-3;
-        while (!glfwWindowShouldClose(window))
+        while (!glfwWindowShouldClose(window) && game_is_running)
         {
             auto start = steady_clock::now();
             glfwPollEvents();
@@ -110,12 +120,35 @@ int main(void) {
                 timer.Reset();
             }
             
+            //check collision with player
             for (int i = 0; i < AsteroidPoolingSystem::asteroids.size(); i++) {
-                Asteroid*& a = AsteroidPoolingSystem::asteroids[i];
-                if (!a->isActive) continue;
-                if (a->Collision(player->position, player->scale.x)) {
-                    std::cout << "Perdeu" << std::endl;
+                Asteroid*& ast = AsteroidPoolingSystem::asteroids[i];
+                if (!ast->isActive) continue;
+                if (ast->Collision(player->position, player->scale.x)) {
+                    game_is_running = false;
+                    std::cout << "Foram marcados " << points << " pontos!!" <<  std::endl;
                 }
+            }
+            
+            if (!game_is_running) break;
+
+            //check asteroid destruction
+            for (int i = 0; i < BulletFireSystem::bullets.size(); i++) {
+                Bullet*& bullet = BulletFireSystem::bullets[i];
+                
+                if (!bullet->isActive) continue;
+                
+                for (int i = 0; i < AsteroidPoolingSystem::asteroids.size(); i++) {
+                    Asteroid*& ast = AsteroidPoolingSystem::asteroids[i];
+                    if (!ast->isActive) continue;
+                    if (ast->Collision(bullet->position, bullet->radius)) {
+                        ast->isActive = false;
+                        bullet->isActive = false;
+                        points++;
+                        break;
+                    }
+                }
+
             }
 
             bufferData.Update(delta_time);

@@ -6,6 +6,8 @@
 namespace BulletFireSystem
 {
 	#define MAX_BULLETS 50
+	
+	extern std::vector<Bullet*> bullets;
 
 	void SpawnBullet(Player* player);
 
