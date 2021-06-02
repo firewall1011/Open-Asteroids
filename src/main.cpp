@@ -67,15 +67,18 @@ int main(void) {
     {
         BufferData bufferData;
 
-        AsteroidsGenerator asteroidsGenerator = AsteroidsGenerator(&bufferData, 0.03f, 0.08f, 50, 100, 0.001f, 0.003f, 2.0f);
-        srand(1);
+        AsteroidsGenerator asteroidsGenerator = AsteroidsGenerator(0.03f, 0.08f, 50, 100, 0.001f, 0.003f, 2.0f);
+        
         asteroidsGenerator.CreateAsteroids(20);
+        bufferData.data.insert(std::end(bufferData.data), std::begin(AsteroidPoolingSystem::asteroids), std::end(AsteroidPoolingSystem::asteroids));
+        
+        srand(1);
        
         Player* player = new Player(window);
         bufferData.data.push_back(player);
         
         BulletFireSystem::CreateBullets(bufferData);
-        
+
         bufferData.SendToGPU();
 
         // Associando variáveis do programa GLSL (Vertex Shaders) com nossos dados
@@ -105,6 +108,14 @@ int main(void) {
             {
                 AsteroidPoolingSystem::SpawnAsteroid();
                 timer.Reset();
+            }
+            
+            for (int i = 0; i < AsteroidPoolingSystem::asteroids.size(); i++) {
+                Asteroid*& a = AsteroidPoolingSystem::asteroids[i];
+                if (!a->isActive) continue;
+                if (a->Collision(player->position, player->scale.x)) {
+                    std::cout << "Perdeu" << std::endl;
+                }
             }
 
             bufferData.Update(delta_time);

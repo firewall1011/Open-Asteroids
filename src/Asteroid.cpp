@@ -31,7 +31,7 @@ void Asteroid::Draw(int first) const
 
 bool Asteroid::Collision(vec2 point, float obj_radius) const
 {
-    return Collisions::CircleWithCircle(center, point, radius, obj_radius);
+    return Collisions::CircleWithCircle(position, point, radius, obj_radius);
 }
 
 void Asteroid::Update(float delta_time)
