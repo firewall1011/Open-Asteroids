@@ -23,7 +23,7 @@ int main(void) {
     BufferData bufferData;
 
     // Generate asteroids
-    AsteroidsGenerator asteroidsGenerator = AsteroidsGenerator(0.03f, 0.08f, 50, 100, 0.001f, 0.003f, 2.0f);
+    AsteroidsGenerator asteroidsGenerator = AsteroidsGenerator(0.03f, 0.08f, 50, 100, 0.3f, 0.9f, 2.0f);
     asteroidsGenerator.CreateAsteroids(20);
     
     // Insert Asteroids data to buffer

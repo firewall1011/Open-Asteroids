@@ -36,8 +36,8 @@ bool Asteroid::Collision(vec2 point, float obj_radius) const
 
 void Asteroid::Update(float delta_time)
 {
-    Move((move_dir) * speed);
-    Rotate(0.005f);
+    Move((move_dir) * speed * delta_time);
+    Rotate(0.5f * delta_time);
 
     if (abs(position.x) > 2.1f || abs(position.y) > 2.1f)
         isActive = false;
