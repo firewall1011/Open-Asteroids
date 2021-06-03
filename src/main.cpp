@@ -97,9 +97,6 @@ int main(void) {
     // Exibindo nossa janela
     glfwShowWindow(window);
 
-    // Initialize asteroid Respawn Timer
-    Timer timer(0.35f);
-
     //Contador de pontos do jogador
     int points = 0;
 
@@ -117,11 +114,7 @@ int main(void) {
 
         glUniform4f(loc_color, 1, 0, 0, 1);
             
-        if (timer.Tick(delta_time)) 
-        {
-            AsteroidPoolingSystem::SpawnAsteroid();
-            timer.Reset();
-        }
+        AsteroidPoolingSystem::Tick(delta_time);
             
         //check collision with player
         for (int i = 0; i < AsteroidPoolingSystem::asteroids.size(); i++) {

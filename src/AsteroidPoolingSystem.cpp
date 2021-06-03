@@ -4,6 +4,8 @@
 namespace AsteroidPoolingSystem
 {	
 	std::vector<Asteroid*> asteroids;
+	Timer timer(ASTEROID_RESPAWN_COOLDOWN);
+
 	void SpawnAsteroid()
 	{
 		Asteroid* a = FindInactiveAsteroid();
@@ -23,5 +25,14 @@ namespace AsteroidPoolingSystem
 		}
 
 		return nullptr;
+	}
+
+	void Tick(float delta_time)
+	{
+		if (timer.Tick(delta_time)) 
+		{
+			SpawnAsteroid();
+			timer.Reset();
+		}
 	}
 }
