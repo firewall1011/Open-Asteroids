@@ -3,7 +3,7 @@
 #include "Bullet.h"
 #include "Collisions.h"
 
-const float Bullet::speed = 0.005f;
+const float Bullet::speed = 1;
 const float Bullet::radius = 0.02f;
 
 Bullet::Bullet()
@@ -29,7 +29,7 @@ bool Bullet::Collision(vec2 other_point, float other_radius) const
 
 void Bullet::Update(float delta_time)
 {
-	Move(move_dir * speed);
+	Move(move_dir * speed * delta_time);
 
 	if (abs(position.x) > 1.0f || abs(position.y) > 1.0f)
 		isActive = false;

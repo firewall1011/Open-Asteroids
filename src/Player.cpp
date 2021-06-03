@@ -22,8 +22,9 @@ void Player::Draw(int first) const {
     glDrawArrays(GL_LINE_LOOP, first, length);
 }
 
+// Not implemented
 bool Player::Collision(vec2 point, float radius) const {
-    return true;
+    return false;
 }
 
 void Player::Update(float delta_time) {
