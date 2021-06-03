@@ -8,7 +8,7 @@
 #include"Player.h"
 #include "BulletFireSystem.h"
 
-Player::Player(GLFWwindow* w) : Object(), timer(0.1f)
+Player::Player(GLFWwindow* w, float fireSpeed) : Object(), timer(1/fireSpeed)
 {
     window = w;
     glfwGetWindowSize(window, &scr_width, &scr_height);

@@ -23,7 +23,7 @@ int main(void) {
     BufferData bufferData;
 
     // Generate asteroids
-    AsteroidsGenerator asteroidsGenerator = AsteroidsGenerator(0.03f, 0.08f, 50, 100, 0.3f, 0.9f, 2.0f);
+    AsteroidsGenerator asteroidsGenerator = AsteroidsGenerator(0.03f, 0.08f, 50, 100, 0.2f, 0.6f, 2.0f);
     asteroidsGenerator.CreateAsteroids(20);
     
     // Insert Asteroids data to buffer
@@ -31,7 +31,7 @@ int main(void) {
         
     //srand(1);
     //Create Player and insert to buffer
-    Player* player = new Player(window);
+    Player* player = new Player(window, 15);
     bufferData.data.push_back(player);
     
     // Generate Bullets for shooting
@@ -103,7 +103,7 @@ void CheckBulletToAsteroidCollision(int& points)
             
             if (ast->Collision(bullet->position, bullet->radius)) 
             {
-                ast->isActive = false;
+                ast->Damage();
                 bullet->isActive = false;
                 points++;
                 break;

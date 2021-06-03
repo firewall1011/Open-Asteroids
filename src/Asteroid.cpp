@@ -11,6 +11,7 @@ Asteroid::Asteroid(int num_vertices, float radius, float noise, vec2 center, vec
     length = num_vertices;
     this->center = center;
     this->radius = radius;
+    this->init_radius = radius;
     this->move_dir = move_dir;
     this->speed = speed;
 }
@@ -20,6 +21,7 @@ Asteroid::Asteroid(int num_vertices, float radius, float noise, float speed)
     vertices = AsteroidVertices(num_vertices, radius, noise, center);
     length = num_vertices;
     this->radius = radius;
+    this->init_radius = radius;
     this->speed = speed;
     this->isActive = false;
 }
@@ -47,6 +49,27 @@ void Asteroid::SetMoveDir(vec2 dir)
 {
     move_dir = dir;
     LookAt(move_dir);
+}
+
+void Asteroid::Damage() 
+{
+    stage--;
+    
+    float scale = (stage / (float)max_stage);
+    SetScale(vec2(1, 1) * scale);
+    radius = init_radius * scale;
+    
+    if (stage <= 0)
+        isActive = false;
+}
+
+void Asteroid::Reset() 
+{
+    stage = max_stage;
+
+    float scale = (stage / (float)max_stage);
+    SetScale(vec2(1, 1) * scale);
+    radius = init_radius * scale;
 }
 
 vec2* AsteroidVertices(int num_vertices, float radius, float distance, const vec2& centro) 

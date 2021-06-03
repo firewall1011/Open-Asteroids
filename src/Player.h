@@ -14,7 +14,7 @@ class Player : public Object {
     bool canShoot = true;
     Timer timer;
 public:
-    Player(GLFWwindow* w);
+    Player(GLFWwindow* w, float fireSpeed);
 
     virtual void Draw(int first) const;
 

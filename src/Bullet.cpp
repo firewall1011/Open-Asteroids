@@ -3,7 +3,7 @@
 #include "Bullet.h"
 #include "Collisions.h"
 
-const float Bullet::speed = 1;
+const float Bullet::speed = 1.5f;
 const float Bullet::radius = 0.02f;
 
 Bullet::Bullet()

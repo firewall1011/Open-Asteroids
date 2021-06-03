@@ -14,6 +14,7 @@ namespace AsteroidPoolingSystem
 		a->position = Random::insideUnitCircle() * 2.0f;
 		a->SetMoveDir( -a->position );
 		a->isActive = true;
+		a->Reset();
 	}
 
 	Asteroid* FindInactiveAsteroid()
