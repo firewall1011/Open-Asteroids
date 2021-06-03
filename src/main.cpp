@@ -1,29 +1,3 @@
-// System Libs
-#define GLFW_INCLUDE_NONE
-#include <GLFW/glfw3.h>
-#include <GL/glew.h>  
-#include <stdlib.h>
-#include <stdio.h>
-#include <cmath>
-#include <iostream>
-#include <chrono>
-#include <vector>
-#include <thread>
-
-// Math / Utils
-#include "Shader.h"
-#include "tvector.h"
-#include "mat4.h"
-#include "Random.h"
-
-// Objects
-#include "Asteroid.h"
-
-// Systems
-#include "BufferData.h"
-#include "AsteroidsGenerator.h"
-#include "BulletFireSystem.h"
-#include "AsteroidPoolingSystem.h"
 #include "main.h"
 
 using namespace std::chrono_literals;
@@ -33,27 +7,6 @@ using namespace TLibrary;
 #define FPS 144
 #define MS_FTIME 1000ms/FPS
 #define NANO_TO_SEC_F(t) (float)(t).count()*1e-9;
-
-GLFWwindow* create_window(int width, int height, const char* name) {
-    // inicicializando o sistema de\ janelas
-    glfwInit();
-
-    // deixando a janela invisivel, por enquanto
-    glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE);
-
-    // criando uma janela
-    GLFWwindow* window = glfwCreateWindow(width, height, name, NULL, NULL);
-
-    // tornando a janela como principal 
-    glfwMakeContextCurrent(window);
-
-    return window;
-}
-
-void close_window(GLFWwindow* window) {
-    glfwDestroyWindow(window);
-    glfwTerminate();
-}
 
 int main(void) {
 
@@ -116,30 +69,13 @@ int main(void) {
         glUniform4f(loc_color, 1, 0, 0, 1);
             
         AsteroidPoolingSystem::Tick(delta_time);
-            
+        
         CheckCollisionWithPlayer(player, game_is_running, points);
+        CheckBulletToAsteroidCollision(points);
             
         if (!game_is_running) break;
 
-        //check asteroid destruction
-        for (int i = 0; i < BulletFireSystem::bullets.size(); i++) {
-            Bullet*& bullet = BulletFireSystem::bullets[i];
-                
-            if (!bullet->isActive) continue;
-                
-            for (int i = 0; i < AsteroidPoolingSystem::asteroids.size(); i++) {
-                Asteroid*& ast = AsteroidPoolingSystem::asteroids[i];
-                if (!ast->isActive) continue;
-                if (ast->Collision(bullet->position, bullet->radius)) {
-                    ast->isActive = false;
-                    bullet->isActive = false;
-                    points++;
-                    break;
-                }
-            }
-
-        }
-
+        // Update and Render Objects
         bufferData.Update(delta_time);
         bufferData.Draw(shader, loc_transform);
 
@@ -149,19 +85,32 @@ int main(void) {
         std::this_thread::sleep_for(sleepTime);
 
         delta_time = NANO_TO_SEC_F(sleepTime);
-            
-#ifdef DEBUG
-        while (int error = glGetError() != GL_NO_ERROR)
-        {
-            std::cout << "GlErrorFlag: " << error << std::endl;
-        }
-#endif // DEBUG
-
     }
-
     close_window(window);
 
+    std::cin.get();
     return EXIT_SUCCESS;
+}
+
+void CheckBulletToAsteroidCollision(int& points)
+{
+    for (Bullet*& bullet : BulletFireSystem::bullets) 
+    {
+        if (!bullet->isActive) continue;
+
+        for (Asteroid*& ast : AsteroidPoolingSystem::asteroids) {
+            if (!ast->isActive) continue;
+            
+            if (ast->Collision(bullet->position, bullet->radius)) 
+            {
+                ast->isActive = false;
+                bullet->isActive = false;
+                points++;
+                break;
+            }
+        }
+
+    }
 }
 
 void CheckCollisionWithPlayer(Player* player, bool& game_is_running, int points)
@@ -173,7 +122,30 @@ void CheckCollisionWithPlayer(Player* player, bool& game_is_running, int points)
         if (ast->Collision(player->position, player->scale.x)) 
         {
             game_is_running = false;
-            std::cout << "Foram marcados " << points << " pontos!!" << std::endl;
+            std::cout << "\nForam marcados " << points << " pontos!!" << std::endl;
         }
     }
+}
+
+GLFWwindow* create_window(int width, int height, const char* name) 
+{
+    // inicicializando o sistema de\ janelas
+    glfwInit();
+
+    // deixando a janela invisivel, por enquanto
+    glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE);
+
+    // criando uma janela
+    GLFWwindow* window = glfwCreateWindow(width, height, name, NULL, NULL);
+
+    // tornando a janela como principal 
+    glfwMakeContextCurrent(window);
+
+    return window;
+}
+
+void close_window(GLFWwindow* window) 
+{
+    glfwDestroyWindow(window);
+    glfwTerminate();
 }
