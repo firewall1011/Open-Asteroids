@@ -24,6 +24,7 @@
 #include "AsteroidsGenerator.h"
 #include "BulletFireSystem.h"
 #include "AsteroidPoolingSystem.h"
+#include "main.h"
 
 using namespace std::chrono_literals;
 using namespace std::chrono;
@@ -116,15 +117,7 @@ int main(void) {
             
         AsteroidPoolingSystem::Tick(delta_time);
             
-        //check collision with player
-        for (int i = 0; i < AsteroidPoolingSystem::asteroids.size(); i++) {
-            Asteroid*& ast = AsteroidPoolingSystem::asteroids[i];
-            if (!ast->isActive) continue;
-            if (ast->Collision(player->position, player->scale.x)) {
-                game_is_running = false;
-                std::cout << "Foram marcados " << points << " pontos!!" <<  std::endl;
-            }
-        }
+        CheckCollisionWithPlayer(player, game_is_running, points);
             
         if (!game_is_running) break;
 
@@ -169,4 +162,18 @@ int main(void) {
     close_window(window);
 
     return EXIT_SUCCESS;
+}
+
+void CheckCollisionWithPlayer(Player* player, bool& game_is_running, int points)
+{
+    for (Asteroid*& ast : AsteroidPoolingSystem::asteroids) 
+    {
+        if (!ast->isActive) continue;
+
+        if (ast->Collision(player->position, player->scale.x)) 
+        {
+            game_is_running = false;
+            std::cout << "Foram marcados " << points << " pontos!!" << std::endl;
+        }
+    }
 }

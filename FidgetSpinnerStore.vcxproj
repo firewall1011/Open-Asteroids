@@ -168,6 +168,7 @@
     <ClInclude Include="src\Asteroid.h" />
     <ClInclude Include="src\AsteroidsGenerator.h" />
     <ClInclude Include="src\BufferData.h" />
+    <ClInclude Include="src\main.h" />
     <ClInclude Include="src\Object.h" />
     <ClInclude Include="src\Player.h" />
     <ClInclude Include="src\Timer.h" />
