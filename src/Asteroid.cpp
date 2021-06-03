@@ -37,7 +37,7 @@ bool Asteroid::Collision(vec2 point, float obj_radius) const
 void Asteroid::Update(float delta_time)
 {
     Move((move_dir) * speed * delta_time);
-    Rotate(0.5f * delta_time);
+    Rotate(3.0f * delta_time);
 
     if (abs(position.x) > 2.1f || abs(position.y) > 2.1f)
         isActive = false;
@@ -49,7 +49,8 @@ void Asteroid::SetMoveDir(vec2 dir)
     LookAt(move_dir);
 }
 
-vec2* AsteroidVertices(int num_vertices, float radius, float distance, const vec2& centro) {
+vec2* AsteroidVertices(int num_vertices, float radius, float distance, const vec2& centro) 
+{
     vec2* vertices = new vec2[num_vertices];
 
     float angle = 0.0f;
