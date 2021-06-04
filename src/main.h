@@ -31,5 +31,5 @@ GLFWwindow* create_window(int width, int height, const char* name);
 void close_window(GLFWwindow* window);
 
 // Collisions
-void CheckCollisionWithPlayer(Player* player, bool& game_is_running, int points);
+void CheckCollisionWithPlayer(Player* player, bool& game_is_running);
 void CheckBulletToAsteroidCollision(int& points);

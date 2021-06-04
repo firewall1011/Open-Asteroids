@@ -36,7 +36,7 @@ int main(void) {
     
     // Generate Bullets for shooting
     BulletFireSystem::CreateBullets(bufferData);
-    // TODO: bufferData.data.insert
+    bufferData.data.insert(std::end(bufferData.data), std::begin(BulletFireSystem::bullets), std::end(BulletFireSystem::bullets));
 
     bufferData.SendToGPU();
 
@@ -70,7 +70,7 @@ int main(void) {
             
         AsteroidPoolingSystem::Tick(delta_time);
         
-        CheckCollisionWithPlayer(player, game_is_running, points);
+        CheckCollisionWithPlayer(player, game_is_running);
         CheckBulletToAsteroidCollision(points);
             
         if (!game_is_running) break;
@@ -88,6 +88,7 @@ int main(void) {
     }
     close_window(window);
 
+    std::cout << "\nForam marcados " << points << " pontos!!" << std::endl;
     std::cin.get();
     return EXIT_SUCCESS;
 }
@@ -113,7 +114,7 @@ void CheckBulletToAsteroidCollision(int& points)
     }
 }
 
-void CheckCollisionWithPlayer(Player* player, bool& game_is_running, int points)
+void CheckCollisionWithPlayer(Player* player, bool& game_is_running)
 {
     for (Asteroid*& ast : AsteroidPoolingSystem::asteroids) 
     {
@@ -122,7 +123,6 @@ void CheckCollisionWithPlayer(Player* player, bool& game_is_running, int points)
         if (ast->Collision(player->position, player->scale.x)) 
         {
             game_is_running = false;
-            std::cout << "\nForam marcados " << points << " pontos!!" << std::endl;
         }
     }
 }
