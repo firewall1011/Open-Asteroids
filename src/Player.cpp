@@ -8,18 +8,54 @@
 #include"Player.h"
 #include "BulletFireSystem.h"
 
+vec2* CreatePlayerCharacter(int& length)
+{
+    vec2* vertices = new vec2[]
+    {
+        //#begin lineloop
+        vec2(-0.194f,-0.974f), //A
+        vec2(0.2026f, - 0.972f), //B
+        vec2(0.316f, -0.808f), //C
+        vec2(0.46f, -0.682f), // D
+        vec2(0.8f, -0.6f), //E
+        vec2(0.4f, -0.4f), //F
+        vec2(0.2f, -0.2f), //G
+        vec2(0.0f, 0.2f), // H
+        vec2(-0.2f, -0.2f), // N
+        vec2(-0.4f, -0.4f), // M
+        vec2(-0.8f, -0.6f), // L
+        vec2(-0.465f, -0.681f), // K
+        vec2(-0.326f, -0.804f), // J
+        //#end lineloop
+        //#begin linestrip
+        vec2(-0.4f, -0.4f), // M
+        vec2(0.0f, 1.0f), // I
+        vec2(0.4f, -0.4f), //F
+        //#end linestrip
+    };
+    
+    length = 16;
+    for (int i = 0; i < length; i++) 
+    {
+        std::cout << vertices[i] << std::endl;
+    }
+
+    return vertices;
+}
+
 Player::Player(GLFWwindow* w, float fireSpeed) : Object(), timer(1/fireSpeed)
 {
     window = w;
     glfwGetWindowSize(window, &scr_width, &scr_height);
-    vertices = CriarTrianguloIsosceles(0.9f, center);
-    length = 3;
+    vertices = CreatePlayerCharacter(length);
 
     SetScale(vec2(0.05f, 0.05f));
 }
 
-void Player::Draw(int first) const {
-    glDrawArrays(GL_LINE_LOOP, first, length);
+void Player::Draw(int first) const 
+{
+    glDrawArrays(GL_LINE_LOOP, first, 13);
+    glDrawArrays(GL_LINE_STRIP, first + 13, 3);
 }
 
 // Not implemented
@@ -58,7 +94,8 @@ void Player::ProcessInput()
 
 void Player::Shoot() 
 {
-    if (canShoot) {
+    if (canShoot) 
+    {
         BulletFireSystem::SpawnBullet(this);
         canShoot = false;
         timer.Reset();
