@@ -44,17 +44,25 @@ namespace TLibrary {
         return vertices;
     }
 
-    vec2* CriarTrianguloIsosceles(float altura, const vec2& centro) 
+    vec2* CriarTrianguloIsosceles(float altura, const vec2& centro, bool inverse) 
     {
         vec2* vertices = new vec2[3];
         
         float y = -2 * altura + 1;
         float x = cosf(asinf(y));
 
-        vertices[0] = vec2(0.0f, 1.0f) + centro;
-        vertices[1] = vec2(-x, y) + centro;
-        vertices[2] = vec2(x, y) + centro;
-        
+        if(!inverse)
+        {
+            vertices[0] = vec2(0.0f, 1.0f) + centro;
+            vertices[1] = vec2(-x, y) + centro;
+            vertices[2] = vec2(x, y) + centro;
+        }
+        else 
+        {
+            vertices[0] = vec2(0.0f, -1.0f) + centro;
+            vertices[1] = vec2(-x, -y) + centro;
+            vertices[2] = vec2(x, -y) + centro;
+        }
         return vertices;
     }
 
