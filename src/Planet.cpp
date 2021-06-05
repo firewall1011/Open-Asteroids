@@ -1,19 +1,24 @@
 #include "Planet.h"
 #include <GL/glew.h> 
+
 vec2* PlanetVertices(int num_vertices, const vec2& centro);
-Planet::Planet(int num_vertices, const vec2& centro)
+
+Planet::Planet(int num_vertices, const vec2& center, int color_bind, vec3 scenario_color, vec3 obj_color)
 {
-    vertices = PlanetVertices(num_vertices, centro);
+    vertices = PlanetVertices(num_vertices, center);
     length = num_vertices;
     this->center = center;
-    this->radius = radius;
-    this->init_radius = radius;
+    this->color_bind = color_bind;
+    this->scenario_color = scenario_color;
+    this->obj_color = obj_color;
 }
 
 void Planet::Draw(int first) const
 {
+    glUniform4f((GLint) this->color_bind, (GLfloat)obj_color.x, (GLfloat)obj_color.y, (GLfloat)obj_color.z, 1);
     glDrawArrays(GL_LINE_LOOP, first, length/2);
     glDrawArrays(GL_POINTS, first + length/2 , length / 2);
+    glUniform4f((GLint) this->color_bind, (GLfloat)scenario_color.x, (GLfloat)scenario_color.y, (GLfloat)scenario_color.z, 1);
 }
 
 bool Planet::Collision(vec2 point, float radius) const
@@ -23,6 +28,7 @@ bool Planet::Collision(vec2 point, float radius) const
 
 void Planet::Update(float delta_time)
 {
+    Rotate(rotation * delta_time);
 }
 
 void Planet::Damage()

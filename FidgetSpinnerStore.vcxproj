@@ -152,6 +152,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\AsteroidPoolingSystem.cpp" />
+    <ClCompile Include="src\BackgroundSystem.cpp" />
     <ClCompile Include="src\BulletFireSystem.cpp" />
     <ClCompile Include="src\Bullet.cpp" />
     <ClCompile Include="src\Asteroid.cpp" />
@@ -160,10 +161,12 @@
     <ClCompile Include="src\Object.cpp" />
     <ClCompile Include="src\Planet.cpp" />
     <ClCompile Include="src\Player.cpp" />
+    <ClCompile Include="src\Star.cpp" />
     <ClCompile Include="src\Timer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\AsteroidPoolingSystem.h" />
+    <ClInclude Include="src\BackgroundSystem.h" />
     <ClInclude Include="src\BulletFireSystem.h" />
     <ClInclude Include="src\Bullet.h" />
     <ClInclude Include="src\Asteroid.h" />
@@ -173,6 +176,7 @@
     <ClInclude Include="src\Object.h" />
     <ClInclude Include="src\Planet.h" />
     <ClInclude Include="src\Player.h" />
+    <ClInclude Include="src\Star.h" />
     <ClInclude Include="src\Timer.h" />
     <ClInclude Include="TLibrary\src\Collisions.h" />
     <ClInclude Include="TLibrary\src\Random.h" />

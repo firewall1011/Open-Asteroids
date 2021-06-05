@@ -21,36 +21,49 @@ int main(void) {
     
     // Initialize objects buffer
     BufferData bufferData;
+        
+    // Associando variável cor do programa GLSL (Vertex Shaders) com nossos dados
+    GLint loc_color = glGetUniformLocation(shader.GetID(), "color");
+
+    //definindo cor dos objetos e do background
+    vec3 obj_color = vec3(0.0f, 1.0f, 0.0f);
+    vec3 background_color = vec3(0.5f, 0.5f, 0.0f);
+
 
     // Generate asteroids
     AsteroidsGenerator asteroidsGenerator = AsteroidsGenerator(0.03f, 0.08f, 50, 100, 0.2f, 0.6f, 2.0f);
     asteroidsGenerator.CreateAsteroids(20);
-    // Insert Asteroids data to buffer
-    bufferData.data.insert(std::end(bufferData.data), std::begin(AsteroidPoolingSystem::asteroids), std::end(AsteroidPoolingSystem::asteroids));
-        
-    //srand(1);
-    //Create Player and insert to buffer
+    
+    //Create Player
     Player* player = new Player(window, 15);
-    bufferData.data.push_back(player);
     
     // Generate Bullets for shooting
     BulletFireSystem::CreateBullets(bufferData);
+    
+    //generate background 
+    BackgroundSystem::CreateBackground(0.9f, 0.05, 0.01, 100, loc_color, obj_color, background_color);
+ 
+
+    //insert background to buffer
+    bufferData.data.insert(std::end(bufferData.data), std::begin(BackgroundSystem::universe), std::end(BackgroundSystem::universe));
+    // Insert Asteroids data to buffer
+    bufferData.data.insert(std::end(bufferData.data), std::begin(AsteroidPoolingSystem::asteroids), std::end(AsteroidPoolingSystem::asteroids));
+    //insert Player to data buffer
+    bufferData.data.push_back(player);
+    // Insert Bullets to buffer
     bufferData.data.insert(std::end(bufferData.data), std::begin(BulletFireSystem::bullets), std::end(BulletFireSystem::bullets));
-
-    //generate background and insert it to buffer
-    Planet *p = new Planet(100, vec2(0, 0));
-    p->SetScale(vec2(0.1f, 0.1f));
-    bufferData.data.push_back(p);
-
+    
     bufferData.SendToGPU();
+    
 
-    // Associando variáveis do programa GLSL (Vertex Shaders) com nossos dados
+    // Associando variáveis restantes do programa GLSL (Vertex Shaders) com nossos dados
     GLint loc_position = glGetAttribLocation(shader.GetID(), "position");
     GLint loc_transform = glGetUniformLocation(shader.GetID(), "transformation_matrix");
-    GLint loc_color = glGetUniformLocation(shader.GetID(), "color");
 
     glEnableVertexAttribArray(loc_position);
     glVertexAttribPointer(loc_position, 2, GL_FLOAT, GL_FALSE, sizeof(vec2), (void*)0); // https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glVertexAttribPointer.xhtml
+    
+    
 
     // Exibindo nossa janela
     glfwShowWindow(window);
@@ -69,8 +82,8 @@ int main(void) {
 
         glClear(GL_COLOR_BUFFER_BIT);
         glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-
-        glUniform4f(loc_color, 1, 0, 0, 1);
+        
+        glUniform4f(loc_color, (GLfloat) obj_color.x, (GLfloat) obj_color.y, (GLfloat) obj_color.z, 1);
             
         AsteroidPoolingSystem::Tick(delta_time);
         

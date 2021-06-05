@@ -19,13 +19,13 @@
 
 // Objects
 #include "Asteroid.h"
-#include "Planet.h"
 
 // Systems
 #include "BufferData.h"
 #include "AsteroidsGenerator.h"
 #include "BulletFireSystem.h"
 #include "AsteroidPoolingSystem.h"
+#include "BackgroundSystem.h"
 
 // Window
 GLFWwindow* create_window(int width, int height, const char* name);
