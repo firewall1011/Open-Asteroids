@@ -9,7 +9,7 @@ class BufferData {
 public:
 	std::vector<Object*> data;
 
-	void Draw(Shader& shader, GLuint matrix) 
+	void Draw(Shader& shader) 
 	{
 		shader.Bind();
 		int offset = 0;
@@ -17,8 +17,8 @@ public:
 		{
 			if (obj->isActive) 
 			{
-				glUniformMatrix4fv(matrix, 1, GL_TRUE, obj->Transform().m);
-				obj->Draw(offset);
+				glUniformMatrix4fv(shader.loc_transform, 1, GL_TRUE, obj->Transform().m);
+				obj->Draw(offset, shader);
 			}
 			offset += obj->length;
 		}

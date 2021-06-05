@@ -17,7 +17,7 @@ Bullet::Bullet()
 	isActive = false;
 }
 
-void Bullet::Draw(int first) const
+void Bullet::Draw(int first, Shader& shader) const
 {
 	glDrawArrays(GL_LINE_LOOP, first, length);
 }

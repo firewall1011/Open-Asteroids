@@ -16,7 +16,7 @@ class Player : public Object {
 public:
     Player(GLFWwindow* w, float fireSpeed);
 
-    virtual void Draw(int first) const;
+    virtual void Draw(int first, Shader& shader) const;
 
     virtual bool Collision(vec2 point, float radius) const;
 

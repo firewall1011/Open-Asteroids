@@ -48,8 +48,12 @@ Player::Player(GLFWwindow* w, float fireSpeed) : Object(), timer(1/fireSpeed)
     SetScale(vec2(0.05f, 0.05f));
 }
 
-void Player::Draw(int first) const 
+void Player::Draw(int first, Shader& shader) const
 {
+    shader.SetColor(vec3(0, 0, 0));
+    glDrawArrays(GL_TRIANGLE_FAN, first, 13);
+    glDrawArrays(GL_TRIANGLES, first + 13, 3);
+    shader.SetColor(vec3(1, 0.219f, 0.392f));
     glDrawArrays(GL_LINE_LOOP, first, 13);
     glDrawArrays(GL_LINE_STRIP, first + 13, 3);
 }

@@ -15,7 +15,5 @@ namespace BackgroundSystem
 						  float max_celestial_size, 
 						  float min_celestial_size, 
 						  int universe_population, 
-						  int color_bind, 
-						  vec3 scenario_color, 
-		                  vec3 obj_color);
+						  vec3 scenario_color);
 };

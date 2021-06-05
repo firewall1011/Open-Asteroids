@@ -10,6 +10,8 @@ using namespace TLibrary;
 
 int main(void) {
 
+    
+
     GLFWwindow* window = create_window(720, 720, "Asteroids");
 
     // inicializando Glew (para lidar com funcoes OpenGL)
@@ -22,17 +24,13 @@ int main(void) {
     // Initialize objects buffer
     BufferData bufferData;
 
-    // Associando variáveis restantes do programa GLSL (Vertex Shaders) com nossos dados
-    GLint loc_position = glGetAttribLocation(shader.GetID(), "position");
-    GLint loc_transform = glGetUniformLocation(shader.GetID(), "transformation_matrix");
-    GLint loc_color = glGetUniformLocation(shader.GetID(), "color");
-
     //definindo cor dos objetos e do background
     vec3 obj_color = vec3(0.0f, 1.0f, 0.0f);
-    vec3 background_color = vec3(0.5f, 0.5f, 0.0f);
+    vec3 background_color = vec3(0.176f, 0.886f, 0.901f);
 
 
     // Generate asteroids
+    Random::InitState(1);
     AsteroidsGenerator asteroidsGenerator = AsteroidsGenerator(0.03f, 0.08f, 50, 100, 0.2f, 0.6f, 2.0f);
     asteroidsGenerator.CreateAsteroids(20);
     
@@ -42,8 +40,9 @@ int main(void) {
     // Generate Bullets for shooting
     BulletFireSystem::CreateBullets(bufferData);
     
-    //generate background 
-    BackgroundSystem::CreateBackground(0.9f, 0.05, 0.01, 50, loc_color, obj_color, background_color);
+    //generate background
+    Random::InitState(255);
+    BackgroundSystem::CreateBackground(0.9f, 0.035f, 0.01f, 50, background_color);
 
     //insert background to buffer
     bufferData.data.insert(std::end(bufferData.data), std::begin(BackgroundSystem::universe), std::end(BackgroundSystem::universe));
@@ -56,8 +55,8 @@ int main(void) {
     
     bufferData.SendToGPU();
     
-    glEnableVertexAttribArray(loc_position);
-    glVertexAttribPointer(loc_position, 2, GL_FLOAT, GL_FALSE, sizeof(vec2), (void*)0);
+    glEnableVertexAttribArray(shader.loc_position);
+    glVertexAttribPointer(shader.loc_position, 2, GL_FLOAT, GL_FALSE, sizeof(vec2), (void*)0);
 
     // Exibindo nossa janela
     glfwShowWindow(window);
@@ -76,8 +75,6 @@ int main(void) {
 
         glClear(GL_COLOR_BUFFER_BIT);
         glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-        
-        glUniform4f(loc_color, (GLfloat) obj_color.x, (GLfloat) obj_color.y, (GLfloat) obj_color.z, 1);
             
         AsteroidPoolingSystem::Tick(delta_time);
         
@@ -88,7 +85,7 @@ int main(void) {
 
         // Update and Render Objects
         bufferData.Update(delta_time);
-        bufferData.Draw(shader, loc_transform);
+        bufferData.Draw(shader);
 
         glfwSwapBuffers(window);
 

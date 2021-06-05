@@ -3,22 +3,19 @@
 
 vec2* StarVertices(const vec2& centro);
 
-Star::Star(const vec2& center, int color_bind, vec3 scenario_color, vec3 obj_color, float rotation_speed)
+Star::Star(const vec2& center, vec3 scenario_color, float rotation_speed)
 {
     vertices = StarVertices(center);
     length = 6;
     this->center = center;
-    this->color_bind = color_bind;
-    this->scenario_color = scenario_color;
-    this->obj_color = obj_color;
+    this->color = scenario_color;
     this->rotation_speed = rotation_speed;
 }
 
-void Star::Draw(int first) const
+void Star::Draw(int first, Shader& shader) const
 {
-    glUniform4f((GLint) this->color_bind, (GLfloat)obj_color.x, (GLfloat)obj_color.y, (GLfloat)obj_color.z, 1);
+    shader.SetColor(color);
     glDrawArrays(GL_LINE_STRIP, first, length);
-    glUniform4f((GLint) this->color_bind, (GLfloat)scenario_color.x, (GLfloat)scenario_color.y, (GLfloat)scenario_color.z, 1);
 }
 
 bool Star::Collision(vec2 point, float radius) const

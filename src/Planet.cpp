@@ -3,23 +3,20 @@
 
 vec2* PlanetVertices(int num_vertices, const vec2& centro);
 
-Planet::Planet(int num_vertices, const vec2& center, int color_bind, vec3 scenario_color, vec3 obj_color, float rotation_speed)
+Planet::Planet(int num_vertices, const vec2& center, vec3 scenario_color, float rotation_speed)
 {
     vertices = PlanetVertices(num_vertices, center);
     length = num_vertices;
     this->center = center;
-    this->color_bind = color_bind;
-    this->scenario_color = scenario_color;
-    this->obj_color = obj_color;
+    this->color = scenario_color;
     this->rotation_speed = rotation_speed;
 }
 
-void Planet::Draw(int first) const
+void Planet::Draw(int first, Shader& shader) const
 {
-    glUniform4f((GLint) this->color_bind, (GLfloat)obj_color.x, (GLfloat)obj_color.y, (GLfloat)obj_color.z, 1);
+    shader.SetColor(color);
     glDrawArrays(GL_LINE_LOOP, first, length/2);
     glDrawArrays(GL_POINTS, first + length/2 , length / 2);
-    glUniform4f((GLint) this->color_bind, (GLfloat)scenario_color.x, (GLfloat)scenario_color.y, (GLfloat)scenario_color.z, 1);
 }
 
 bool Planet::Collision(vec2 point, float radius) const

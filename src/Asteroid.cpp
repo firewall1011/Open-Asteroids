@@ -26,8 +26,11 @@ Asteroid::Asteroid(int num_vertices, float radius, float noise, float speed)
     this->isActive = false;
 }
 
-void Asteroid::Draw(int first) const
+void Asteroid::Draw(int first, Shader& shader) const
 {
+    shader.SetColor(vec3(0, 0, 0));
+    glDrawArrays(GL_TRIANGLE_FAN, first, length);
+    shader.SetColor(vec3(0.976f, 0.784f, 0.0054f));
     glDrawArrays(GL_LINE_LOOP, first, length);
 }
 

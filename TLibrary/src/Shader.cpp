@@ -1,4 +1,5 @@
 #include "Shader.h"
+#include "Shader.h"
 #include <GL/glew.h>
 #include <fstream>
 #include <string>
@@ -10,6 +11,10 @@ namespace TLibrary {
 	{
 		ShaderCode code = ParseShader(filepath);
 		_uid = CreateProgram(code);
+
+		loc_position = glGetAttribLocation(_uid, "position");
+		loc_transform = glGetUniformLocation(_uid, "transformation_matrix");
+		loc_color = glGetUniformLocation(_uid, "color");
 	}
 
 	Shader::~Shader()
@@ -126,6 +131,11 @@ namespace TLibrary {
 	void Shader::Unbind() const
 	{
 		glUseProgram(0);
+	}
+
+	void Shader::SetColor(vec3 color) const
+	{
+		glUniform4f(loc_color, color.x, color.y, color.z, 1);
 	}
 
 	GLuint Shader::GetID() const

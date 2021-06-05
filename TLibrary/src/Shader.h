@@ -1,6 +1,8 @@
 #pragma once
 #include <string>
 
+#include "tvector.h"
+
 namespace TLibrary {
 
 	struct ShaderCode {
@@ -14,12 +16,18 @@ namespace TLibrary {
 		unsigned int _uid;
 
 	public:
+		unsigned int loc_transform;
+		unsigned int loc_color;
+		unsigned int loc_position;
+
 		Shader(const std::string& filepath);
 		~Shader();
 
 		void Bind() const;
 		void Unbind() const;
 		
+		void SetColor(vec3 color) const;
+
 		unsigned int GetID() const;
 
 		static ShaderCode ParseShader(const std::string& filepath);
