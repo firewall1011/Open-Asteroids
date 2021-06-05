@@ -3,7 +3,7 @@
 
 vec2* StarVertices(const vec2& centro);
 
-Star::Star(const vec2& center, int color_bind, vec3 scenario_color, vec3 obj_color)
+Star::Star(const vec2& center, int color_bind, vec3 scenario_color, vec3 obj_color, float rotation_speed)
 {
     vertices = StarVertices(center);
     length = 6;
@@ -11,6 +11,7 @@ Star::Star(const vec2& center, int color_bind, vec3 scenario_color, vec3 obj_col
     this->color_bind = color_bind;
     this->scenario_color = scenario_color;
     this->obj_color = obj_color;
+    this->rotation_speed = rotation_speed;
 }
 
 void Star::Draw(int first) const
@@ -27,19 +28,7 @@ bool Star::Collision(vec2 point, float radius) const
 
 void Star::Update(float delta_time)
 {
-    Rotate(rotation * delta_time);
-}
-
-void Star::Damage()
-{
-}
-
-void Star::Reset()
-{
-}
-
-void Star::SetMoveDir(vec2 dir)
-{
+    Rotate(rotation_speed * delta_time);
 }
 
 vec2* StarVertices(const vec2& centro) {

@@ -4,7 +4,7 @@ using namespace std::chrono_literals;
 using namespace std::chrono;
 using namespace TLibrary;
 
-#define FPS 144
+#define FPS 60
 #define MS_FTIME 1000ms/FPS
 #define NANO_TO_SEC_F(t) (float)(t).count()*1e-9;
 
@@ -21,8 +21,10 @@ int main(void) {
     
     // Initialize objects buffer
     BufferData bufferData;
-        
-    // Associando variável cor do programa GLSL (Vertex Shaders) com nossos dados
+
+    // Associando variáveis restantes do programa GLSL (Vertex Shaders) com nossos dados
+    GLint loc_position = glGetAttribLocation(shader.GetID(), "position");
+    GLint loc_transform = glGetUniformLocation(shader.GetID(), "transformation_matrix");
     GLint loc_color = glGetUniformLocation(shader.GetID(), "color");
 
     //definindo cor dos objetos e do background
@@ -41,8 +43,7 @@ int main(void) {
     BulletFireSystem::CreateBullets(bufferData);
     
     //generate background 
-    BackgroundSystem::CreateBackground(0.9f, 0.05, 0.01, 100, loc_color, obj_color, background_color);
- 
+    BackgroundSystem::CreateBackground(0.9f, 0.05, 0.01, 50, loc_color, obj_color, background_color);
 
     //insert background to buffer
     bufferData.data.insert(std::end(bufferData.data), std::begin(BackgroundSystem::universe), std::end(BackgroundSystem::universe));
@@ -55,15 +56,8 @@ int main(void) {
     
     bufferData.SendToGPU();
     
-
-    // Associando variáveis restantes do programa GLSL (Vertex Shaders) com nossos dados
-    GLint loc_position = glGetAttribLocation(shader.GetID(), "position");
-    GLint loc_transform = glGetUniformLocation(shader.GetID(), "transformation_matrix");
-
     glEnableVertexAttribArray(loc_position);
-    glVertexAttribPointer(loc_position, 2, GL_FLOAT, GL_FALSE, sizeof(vec2), (void*)0); // https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glVertexAttribPointer.xhtml
-    
-    
+    glVertexAttribPointer(loc_position, 2, GL_FLOAT, GL_FALSE, sizeof(vec2), (void*)0);
 
     // Exibindo nossa janela
     glfwShowWindow(window);

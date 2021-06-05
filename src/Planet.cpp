@@ -3,7 +3,7 @@
 
 vec2* PlanetVertices(int num_vertices, const vec2& centro);
 
-Planet::Planet(int num_vertices, const vec2& center, int color_bind, vec3 scenario_color, vec3 obj_color)
+Planet::Planet(int num_vertices, const vec2& center, int color_bind, vec3 scenario_color, vec3 obj_color, float rotation_speed)
 {
     vertices = PlanetVertices(num_vertices, center);
     length = num_vertices;
@@ -11,6 +11,7 @@ Planet::Planet(int num_vertices, const vec2& center, int color_bind, vec3 scenar
     this->color_bind = color_bind;
     this->scenario_color = scenario_color;
     this->obj_color = obj_color;
+    this->rotation_speed = rotation_speed;
 }
 
 void Planet::Draw(int first) const
@@ -28,19 +29,7 @@ bool Planet::Collision(vec2 point, float radius) const
 
 void Planet::Update(float delta_time)
 {
-    Rotate(rotation * delta_time);
-}
-
-void Planet::Damage()
-{
-}
-
-void Planet::Reset()
-{
-}
-
-void Planet::SetMoveDir(vec2 dir)
-{
+    Rotate(rotation_speed * delta_time);
 }
 
 vec2* PlanetVertices(int num_vertices, const vec2& centro) {
@@ -71,6 +60,5 @@ vec2* PlanetVertices(int num_vertices, const vec2& centro) {
         angle += (2 * T_PI) / (num_vertices/2 - 1);;
     }
  
-
     return vertices;
 }
