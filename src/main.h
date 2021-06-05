@@ -19,6 +19,7 @@
 
 // Objects
 #include "Asteroid.h"
+#include "Planet.h"
 
 // Systems
 #include "BufferData.h"

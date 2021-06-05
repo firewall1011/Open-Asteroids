@@ -35,10 +35,6 @@ vec2* CreatePlayerCharacter(int& length)
     };
     
     length = 16;
-    for (int i = 0; i < length; i++) 
-    {
-        std::cout << vertices[i] << std::endl;
-    }
 
     return vertices;
 }

@@ -25,7 +25,6 @@ int main(void) {
     // Generate asteroids
     AsteroidsGenerator asteroidsGenerator = AsteroidsGenerator(0.03f, 0.08f, 50, 100, 0.2f, 0.6f, 2.0f);
     asteroidsGenerator.CreateAsteroids(20);
-    
     // Insert Asteroids data to buffer
     bufferData.data.insert(std::end(bufferData.data), std::begin(AsteroidPoolingSystem::asteroids), std::end(AsteroidPoolingSystem::asteroids));
         
@@ -37,6 +36,11 @@ int main(void) {
     // Generate Bullets for shooting
     BulletFireSystem::CreateBullets(bufferData);
     bufferData.data.insert(std::end(bufferData.data), std::begin(BulletFireSystem::bullets), std::end(BulletFireSystem::bullets));
+
+    //generate background and insert it to buffer
+    Planet *p = new Planet(100, vec2(0, 0));
+    p->SetScale(vec2(0.1f, 0.1f));
+    bufferData.data.push_back(p);
 
     bufferData.SendToGPU();
 
