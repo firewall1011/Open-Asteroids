@@ -11,7 +11,7 @@ using namespace std::chrono_literals;
 using namespace std::chrono;
 using namespace TLibrary;
 
-#define FPS 60
+#define FPS 30
 #define MS_FTIME 1000ms/FPS
 #define NANO_TO_SEC_F(t) (float)(t).count()*1e-9;
 
@@ -34,12 +34,11 @@ int main(void) {
     //definindo cor dos objetos e do background
     vec3 obj_color = vec3(0.0f, 1.0f, 0.0f);
     vec3 background_color = vec3(0.176f, 0.886f, 0.901f);
-
-
+    
     // Generate asteroids
     Random::InitState(1);
-    AsteroidsGenerator asteroidsGenerator = AsteroidsGenerator(0.03f, 0.08f, 50, 100, 0.2f, 0.6f, 2.0f);
-    asteroidsGenerator.CreateAsteroids(20);
+    AsteroidsGenerator asteroidsGenerator = AsteroidsGenerator(0.03f, 0.08f, 50, 100, 0.1f, 0.2f, 2.0f);
+    asteroidsGenerator.CreateAsteroids(10);
     
     //Create Player
     Player* player = new Player(window, 15);
