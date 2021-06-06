@@ -1,3 +1,10 @@
+/*
+Trabalho de Computação Gráfica USP - ICMC, São Carlos
+Tiago Marino @firewall1011
+Laura Genari @LauraGenari
+João Pedro Secundino @jpsecundino
+*/
+
 #include "main.h"
 
 using namespace std::chrono_literals;
@@ -64,7 +71,7 @@ int main(void) {
     //Contador de pontos do jogador
     int points = 0;
 
-    //vari�vel de loop do jogo
+    //variável de loop do jogo
     bool game_is_running = true;
 
     float delta_time = (float)(MS_FTIME).count() * 1e-3;
