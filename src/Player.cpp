@@ -99,5 +99,6 @@ void Player::Shoot()
         BulletFireSystem::SpawnBullet(this);
         canShoot = false;
         timer.Reset();
+
     }
 }
